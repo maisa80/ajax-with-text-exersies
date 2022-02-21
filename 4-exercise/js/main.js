@@ -9,3 +9,30 @@
  * 
  *
  */
+let input = document.getElementById('input');
+let fetchBtn = document.getElementById('fetchBtn');
+let tableBody = document.querySelector('#table tbody');
+let image = document.getElementById('image');
+
+
+fetchBtn.addEventListener('click', function () {
+    let url = 'http://codexplained.se/lorem_text_slow.php?numberOfWords=' + input.value;
+
+    image.src = "img/loading.gif";
+
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            
+            tableBody.innerHTML += `
+            <tr> 						
+                <td> ${input.value}</td>				
+                <td> ${data} </td>
+            </tr>
+        `
+        image.src = ' ';
+        })
+        .catch((error) => { console.log(error); })
+       
+    
+})

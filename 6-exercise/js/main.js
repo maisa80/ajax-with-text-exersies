@@ -27,4 +27,68 @@
  * <img src="http://i.imgur.com/MPE8L7D.jpg"> 
  * 
  */
-	
+let previous = document.getElementById('previous');
+let next = document.getElementById('next');
+
+let header = document.getElementById('header');
+let title = document.getElementById('title');
+let text = document.getElementById('text');
+let image = document.getElementById('image');
+let number = 0;
+
+console.log(number);
+fetch('http://codexplained.se/animals.php?animal=' + number)
+
+    .then(response => response.text())
+    .then(data => {
+        splitUrl(data)
+    })
+    .catch((error) => { console.log(error); })
+
+
+
+next.addEventListener('click', function () {
+    number = number + 1;
+    console.log(number);
+    if (number > 4) number = 0;
+    console.log(number);
+    fetch('http://codexplained.se/animals.php?animal=' + number)
+        .then(response => response.text())
+        .then(data => {
+            splitUrl(data)
+        })
+        .catch((error) => { console.log(error); })
+})
+
+
+previous.addEventListener('click', function () {
+    number = number - 1;
+    console.log(number);
+    if (number < 0) number = 4;
+    console.log(number);
+    fetch('http://codexplained.se/animals.php?animal=' + number)
+
+        .then(response => response.text())
+        .then(data => {
+            splitUrl(data)
+        })
+        .catch((error) => { console.log(error); })
+})
+
+
+
+// function you can use:
+function splitUrl(str) {
+    let words = str.split('*');
+
+    for (let i in words) {
+        console.log(words[i]);
+        header.innerHTML = words[0];
+        title.innerHTML = words[1];
+        text.innerHTML = words[2];
+        image.src = words[3];
+
+    }
+
+    return words.join('\n');
+}
